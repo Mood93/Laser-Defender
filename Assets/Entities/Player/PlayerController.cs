@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float speed = 13.0f;
-    public float padding = 0.1f;
+    float padding = 0.5f;
     float xMin = -5;
     float xMax = 5;
 
@@ -23,12 +23,12 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey("up"))
         {
-            transform.position += Vector3.up * speed * Time.deltaTime;
+            //transform.position += Vector3.up * speed * Time.deltaTime;
         }
 
         if (Input.GetKey("down"))
         {
-            transform.position += Vector3.down * speed * Time.deltaTime;
+            //transform.position += Vector3.down * speed * Time.deltaTime;
         }
 
         if (Input.GetKey("left"))
