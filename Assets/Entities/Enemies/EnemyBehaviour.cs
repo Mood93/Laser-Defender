@@ -4,7 +4,27 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour {
 
+    public GameObject projectile;
+
     public float health = 150;
+    public float projectileSpeed = -10f;
+    public float shotsPerSeconds = 0.5f;
+
+    void Update() {
+
+        float probability = Time.deltaTime * shotsPerSeconds;
+
+        if (Random.value < probability) {
+            Fire();
+        }
+
+    }
+
+    void Fire() {
+        Vector3 startPosition = transform.position + new Vector3(0f, -1f, 0f);
+        GameObject missle = Instantiate(projectile, startPosition, Quaternion.identity) as GameObject;
+        missle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
+    }
 
     void OnTriggerEnter2D(Collider2D collider) {
         Projectile missle = collider.gameObject.GetComponent<Projectile>();

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    public GameObject projectile;
 
     public float speed = 13.0f;
-    public GameObject projectile;
     public float projectileSpeed;
     public float firingRate;
+    public float health = 300;
+
     float padding = 0.5f;
     float xMin = -5;
     float xMax = 5;
@@ -30,12 +32,27 @@ public class PlayerController : MonoBehaviour {
             InvokeRepeating("Fire", 0.00001f, firingRate);
         }
 
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
             CancelInvoke("Fire");
         }
 
+    }
 
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        Projectile missle = collider.gameObject.GetComponent<Projectile>();
 
+        if (missle)
+        {
+            health -= missle.GetDamage();
+            missle.Hit();
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+
+            }
+        }
     }
 
     void Movement() {
@@ -65,7 +82,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Fire () {
-        GameObject beam = Instantiate(projectile, transform.position, Quaternion.identity);
+
+        Vector3 offset = new Vector3(0, 1, 0);
+        GameObject beam = Instantiate(projectile, transform.position + offset, Quaternion.identity);
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed);
     }
 
