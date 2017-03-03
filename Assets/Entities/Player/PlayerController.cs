@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
     public float firingRate;
     public float health = 300;
 
+    public AudioClip fireSound;
+
     float padding = 0.5f;
     float xMin = -5;
     float xMax = 5;
@@ -50,7 +52,6 @@ public class PlayerController : MonoBehaviour {
             if (health <= 0)
             {
                 Destroy(gameObject);
-
             }
         }
     }
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Fire () {
-
+        AudioSource.PlayClipAtPoint(fireSound, transform.position);
         Vector3 offset = new Vector3(0, 1, 0);
         GameObject beam = Instantiate(projectile, transform.position + offset, Quaternion.identity);
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed);
