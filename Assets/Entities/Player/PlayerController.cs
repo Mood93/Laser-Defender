@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     public float health = 300;
 
     public AudioClip fireSound;
+    public AudioClip deathSound;
 
     float padding = 0.5f;
     float xMin = -5;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour {
         Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance));
         xMin = leftmost.x + padding;
         xMax = rightmost.x - padding;
+
     }
 
     // Update is called once per frame
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour {
             missle.Hit();
             if (health <= 0)
             {
-                Destroy(gameObject);
+                Die();
             }
         }
     }
@@ -89,4 +91,10 @@ public class PlayerController : MonoBehaviour {
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed);
     }
 
+
+    void Die() {
+        LevelManager man = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        man.LoadLevel("Win Screen");
+        Destroy(gameObject);
+    }
 }
